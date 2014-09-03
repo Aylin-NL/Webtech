@@ -1,7 +1,11 @@
 package servlet;
 
 import java.io.IOException;
+
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +23,34 @@ public class LoginServlet extends HttpServlet {
      */
     public LoginServlet() {
         super();
-        // TODO Auto-generated constructor stub
+        init();
     }
+    
+    @Override
+    public void init() {
+
+    }
+    
+    @Override
+    public void destroy() {
+    	
+    }
+    
+    @Override
+    public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	String method = request.getMethod();
+    	System.out.println("are you called?");
+    	if(method.equals("GET")) {
+    		doGet(request, response);
+    	} else if (method.equals("POST")) {
+    		doPost(request,response);
+    	} 
+    }
+    
+    
+    
+    
+    
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -34,7 +64,7 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		ServletContext henk = null;
 		String name = request.toString();
 		System.out.println(name);
 		if(name.equals("register")) {
