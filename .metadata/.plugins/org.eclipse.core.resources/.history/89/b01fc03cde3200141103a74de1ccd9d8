@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>henk</title>
+</head>	
+	<body>
+		<form action="">
+		First name: <input type="text" name="Username"><br>
+		Last name: <input type="password" name="Password">
+		</form>
+		
+		<button type = "button">
+		log in		
+		</button>
+		
+	</body>
+</html>

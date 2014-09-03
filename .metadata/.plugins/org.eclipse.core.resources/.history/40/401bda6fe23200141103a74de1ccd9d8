@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+
+<title>Login</title>
+</head>	
+	<body>
+		<form action="./Servlet1" method="post">
+			username  : <input type="text" name="username"> <br>
+			password  : <input type="password" name="password">
+			<input type="submit" name="submit" value="Send">
+		</form>
+		
+		<form action="./servlet1" method="post">
+			<input type="submit" name="submit" value="Send">
+		</form>
+		
+	</body>
+</html>
