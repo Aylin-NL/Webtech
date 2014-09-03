@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,14 +18,14 @@ import model.User;
  * Servlet implementation class Servlet1
  */
 @WebServlet("/Login")
-public class Login extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Model model;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Login() {
+	public LoginServlet() {
 		super();
 	}
 	
@@ -51,33 +52,35 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if (isValidEntry(request)) {
-			getServletContext().getRequestDispatcher("/home.html").forward(
+			Cookie[] cookies = request.getCookies();
+			if(cookies != null) {
+				for(Cookie c : cookies) {
+					if(c.getName().equals("session")) {
+						int session = Integer.parseInt(c.getValue());
+						session++;
+						c.setValue(session+"");
+						response.addCookie(c);
+						System.out.println(session+"");
+					}
+				}
+			} else {
+				Cookie cookie = new Cookie("session", "1");
+				response.addCookie(cookie);
+			}
+			getServletContext().getRequestDispatcher("/OverviewServlet").forward(
 					request, response);
 		} else {
-			getServletContext().getRequestDispatcher("/login.html").forward(
+			getServletContext().getRequestDispatcher("/wronglogin.html").forward(
 					request, response);
 		}
-
-		// if(name.equals("register")) {
-		// getServletContext().getRequestDispatcher("/register.html").forward(request,
-		// response);
-		// } else if (name.equals("submit")) {
-		// System.out.println("niet registreren");
-		// }
-
 	}
 
 	private boolean isValidEntry(HttpServletRequest request) {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		if (username == null && password == null) {
+		if (username == null || password == null) {
 			System.out.println("No entry given");
-		} else if (username == null && password != null) {
-			System.out.println("Please enter your username!");
-		} else if (username != null && password == null) {
-			System.out.println("Please enter your password!");
-		}
-		
+		} 	
 		
 		for (User u : model.getUsers()) {
 			if (username.equals(u.getUsername())) {
